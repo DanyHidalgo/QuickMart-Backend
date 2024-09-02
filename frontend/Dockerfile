@@ -1,26 +1,21 @@
-# Use an official Node.js runtime as a parent image
-FROM node:14-alpine
+# Usar una imagen base de Node.js
+FROM node:14
 
-# Set the working directory inside the container
+# Crear un directorio para la aplicación
 WORKDIR /app
 
-# Copy the package.json and package-lock.json files
+# Copiar los archivos de la aplicación al contenedor
 COPY package*.json ./
+COPY ./ ./
 
-# Install dependencies
+# Instalar dependencias
 RUN npm install
 
-# Copy the rest of the application code
-COPY . .
-
-# Build the React app
+# Construir la aplicación
 RUN npm run build
 
-# Install a lightweight web server to serve the React app
-RUN npm install -g serve
-
-# Serve the React app
-CMD ["serve", "-s", "build"]
-
-# Expose the port the app runs on
+# Exponer el puerto que la aplicación usará
 EXPOSE 3000
+
+# Comando para iniciar la aplicación
+CMD ["npm", "start"]
