@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function App() {
-    const [data, setData] = useState(null);
+    const [message, setMessage] = useState('Loading...');
 
     useEffect(() => {
-        // Conectando con el backend utilizando el nombre del servicio en Docker Compose
-        axios.get('http://backend:8080/api/hola')  // Aquí se usa 'backend' como nombre del servicio
+        axios.get('http://backend:8080/api/hola')
             .then(response => {
-                setData(response.data);  // Almacenar los datos recibidos del backend
+                setMessage(response.data);
             })
             .catch(error => {
-                console.error('Error fetching data', error);  // Manejar errores
+                console.error('Error fetching data:', error); // Log the full error
+                console.log('Error details:', error.response); // Log additional error details
+                setMessage('Error fetching data');
             });
-    }, []);  // El array vacío [] asegura que este código solo se ejecute una vez cuando el componente se monte.
+    }, []);
 
     return (
-        <div>
-            <h1>Data from Backend:</h1>
-            <pre>{JSON.stringify(data, null, 2)}</pre>  // Mostrar los datos recibidos
+        <div className="App">
+            <h1>Message from Backend:</h1>
+            <p>{message}</p>
         </div>
     );
 }

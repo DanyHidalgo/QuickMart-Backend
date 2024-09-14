@@ -1,14 +1,14 @@
-# Usar una imagen base de JDK
+# Use an official OpenJDK image as the base image
 FROM openjdk:17-jdk-slim
 
-# Crear un directorio para la aplicación
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copiar el archivo JAR de la aplicación al contenedor
+# Copy the JAR file from the target directory to the container
 COPY target/QuickMart-0.0.1-SNAPSHOT.jar /app/QuickMart.jar
 
-# Exponer el puerto en el que corre la aplicación
+# Expose port 8080
 EXPOSE 8080
 
-# Comando para ejecutar la aplicación
+# Run the Spring Boot app
 ENTRYPOINT ["java", "-jar", "/app/QuickMart.jar"]
