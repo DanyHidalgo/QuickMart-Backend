@@ -1,24 +1,61 @@
-version: '3'
+version: '3.8'
 services:
-  backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"  # Expose port 8080 for the backend
-    networks:
-      - app-network
-    command: ["java", "-jar", "/app/QuickMart.jar"]  # Ensure the backend runs the JAR file
+    db:
+        image: mysql:8.0
+        container_name: quickmart-db
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpassword
+            MYSQL_DATABASE: quickmart
+            MYSQL_USER: user
+            MYSQL_PASSWORD: 123
+        ports:
+            - "3306:3306"
+        volumes:
+            - db_data:/var/lib/mysql
+            - ./db:/docker-entrypoint-initdb.d
+        networks:
+            - quickmart-network
+        healthcheck:
+            test: ["CMD-SHELL", "mysqladmin ping -hlocalhost -uroot -prootpassword"]
+            interval: 10s
+            retries: 5
+            start_period: 30s
+            timeout: 5s
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"  # Expose port 3000 for the frontend
-    networks:
-      - app-network
+    backend:
+        image: openjdk:17-jdk
+        container_name: quickmart-backend
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "8080:8080"
+        environment:
+            - API_KEY=${API_KEY}
+            - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
+            - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
+            - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+            - SPRING_DATASOURCE_DRIVER_CLASS_NAME=${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
+            - SPRING_JPA_HIBERNATE_DDL_AUTO=${SPRING_JPA_HIBERNATE_DDL_AUTO}
+        depends_on:
+            db:
+                condition: service_healthy
+        networks:
+            - quickmart-network
+        command: ["sh", "-c", "until nc -z db 3306; do echo 'Esperando a MySQL...'; sleep 3; done; java -jar /app/QuickMart.jar"]
+
+    frontend:
+        build:
+            context: ./frontend
+            dockerfile: Dockerfile
+        ports:
+            - "3000:3000"
+        networks:
+            - quickmart-network
+
+volumes:
+    db_data:
 
 networks:
-  app-network:
-    driver: bridge
+    quickmart-network:
+        driver: bridge
