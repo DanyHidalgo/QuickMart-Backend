@@ -5,16 +5,17 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8080:8080"  # Expose port 8080 for the backend
     networks:
       - app-network
+    command: ["java", "-jar", "/app/QuickMart.jar"]  # Ensure the backend runs the JAR file
 
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile  # Make sure frontend has its Dockerfile
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"  # Expose React app on port 3000
+      - "3000:3000"  # Expose port 3000 for the frontend
     networks:
       - app-network
 

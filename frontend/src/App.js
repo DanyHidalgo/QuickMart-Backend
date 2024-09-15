@@ -5,7 +5,7 @@ function App() {
     const [message, setMessage] = useState('Loading...');
 
     useEffect(() => {
-        axios.get('http://backend:8080/api/hola')
+        axios.get('http://localhost:8080/api/hola')
             .then(response => {
                 setMessage(response.data);
             })
