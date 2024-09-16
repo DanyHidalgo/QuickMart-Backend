@@ -21,8 +21,18 @@ public class Partido {
     private Date fechaInicio;
 
     @ManyToOne
-    @JoinColumn(name = "equipo_id", nullable = false)
-    private Equipo equipo;
+    @JoinColumn(name = "equipo_lacl_id", nullable = false)
+    private Equipo equipoLocal;
+
+    @ManyToOne
+    @JoinColumn(name = "equipo_visitante_id", nullable = false)
+    private Equipo equipoVisitante;
+
+    @Column(name = "goles_local", nullable = false)
+    private int golesLocal;
+
+    @Column(name = "goles_visitante", nullable = false)
+    private int golesVisitante;
 
     // Getters y Setters
     public Long getId() {
@@ -57,11 +67,35 @@ public class Partido {
         this.fechaInicio = fechaInicio;
     }
 
-    public Equipo getEquipo() {
-        return equipo;
+    public Equipo getEquipoLocal() {
+        return equipoLocal;
     }
 
-    public void setEquipo(Equipo equipo) {
-        this.equipo = equipo;
+    public void setEquipoLocal(Equipo equipoLocal) {
+        this.equipoLocal = equipoLocal;
+    }
+
+    public Equipo getEquipoVisitante() {
+        return equipoVisitante;
+    }
+
+    public void setEquipoVisitante(Equipo equipoVisitante) {
+        this.equipoVisitante = equipoVisitante;
+    }
+
+    public int getGolesLocal() {
+        return golesLocal;
+    }
+
+    public void setGolesLocal(int golesLocal) {
+        this.golesLocal = golesLocal;
+    }
+
+    public int getGolesVisitante() {
+        return golesVisitante;
+    }
+
+    public void setGolesVisitante(int golesVisitante) {
+        this.golesVisitante = golesVisitante;
     }
 }
