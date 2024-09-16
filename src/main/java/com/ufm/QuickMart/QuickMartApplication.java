@@ -17,6 +17,6 @@ public class QuickMartApplication {
 
 	@RequestMapping("/api/hola")
 	public String helloWorld() {
-		return "Hello World";
+		return "WELCOME!";
 	}
 }
