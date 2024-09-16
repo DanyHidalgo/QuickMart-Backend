@@ -1,42 +1,13 @@
-package com.ufm.QuickMart.entities;
+package com.ufm.QuickMart.dto;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "usuario")
-public class Usuario {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class UsuarioDTO {
     private String nombre;
     private String apellido;
     private String nombreUsuario;
     private String correo;
     private String contrasena;
 
-    // Constructor por defecto
-    public Usuario() {
-    }
-
-    // Constructor con parámetros
-    public Usuario(String nombre, String apellido, String nombreUsuario, String correo, String contrasena) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.nombreUsuario = nombreUsuario;
-        this.correo = correo;
-        this.contrasena = contrasena;
-    }
-
-    // Getters y Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    // Getters and Setters
 
     public String getNombre() {
         return nombre;

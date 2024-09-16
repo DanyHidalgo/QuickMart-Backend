@@ -14,12 +14,6 @@ public class Torneo {
     @Column(nullable = false)
     private String nombre;
 
-    @Column(name = "fecha_inicio", nullable = false)
-    private Date fechaInicio;
-
-    @Column(name = "fecha_final", nullable = false)
-    private Date fechaFinal;
-
     // Getters y Setters
     public Long getId() {
         return id;
@@ -35,21 +29,5 @@ public class Torneo {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Date getFechaInicio() {
-        return fechaInicio;
-    }
-
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    public Date getFechaFinal() {
-        return fechaFinal;
-    }
-
-    public void setFechaFinal(Date fechaFinal) {
-        this.fechaFinal = fechaFinal;
     }
 }
