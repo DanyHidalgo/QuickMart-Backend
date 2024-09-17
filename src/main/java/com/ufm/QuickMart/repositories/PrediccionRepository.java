@@ -10,4 +10,5 @@ public interface PrediccionRepository extends JpaRepository<Prediccion, Long> {
     List<Prediccion> findByUsuarioIdAndGrupoId(Long usuarioId, Long grupoId);
     List<Prediccion> findByPartidoIdAndGrupoId(Long partidoId, Long grupoId);
     List<Prediccion> findByUsuarioIdAndGrupoIdAndPartidoId(Long usuarioId, Long grupoId, Long partidoId);
+    List<Prediccion> findByPartidoId(Long partidoId);
 }

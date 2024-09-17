@@ -29,10 +29,19 @@ public class SecurityConfig {
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/api/torneos").permitAll() // Permite acceso sin autenticación a /api/torneos
-                                .requestMatchers("/api/equipos/torneo/{torneoId}").permitAll()
-                                .requestMatchers("/api/predicciones").permitAll()
-                                .requestMatchers("/api/usuarios/{usuarioId}/grupos").permitAll()
-                                .requestMatchers("/api/usuarios/{usuarioId}/grupos/{grupoId}").permitAll()
+                                .requestMatchers("/api/equipos/torneo/{torneoId}").permitAll() //ver torneo por id
+                                .requestMatchers("/api/predicciones").permitAll() // todas las predicciones
+                                .requestMatchers("/api/usuarios/{usuarioId}/grupos").permitAll() // ver grupos por id de usuario
+                                .requestMatchers("/api/usuarios/grupo/{grupoId}/clasificacion").permitAll() //ver la calsificacion de grupo
+                                .requestMatchers("/api/hola").permitAll()
+                                .requestMatchers("/api/usuarios/{usuarioId}/grupos/{grupoId}").permitAll() //meter usuario en grupo
+                                .requestMatchers("/api/usuarios/{id}").permitAll() //ver usuario por id
+                                .requestMatchers("/api/predicciones/partido/{partidoId}").permitAll() //ver predicciones de partido
+                                .requestMatchers("/api/usuario-grupo/{usuarioId}/{grupoId}").permitAll() //ver puntos de usuario en un grupo
+                                .requestMatchers("/api/partidos/{id}").permitAll() //actualizar resultado de partido
+                                .requestMatchers("/api/usuarios/partido/{partidoId}/actualizar-puntos").permitAll() //puede ser post o put actualiza partido por id
+
+
                                 .anyRequest().authenticated() // Protege todos los demás endpoints
                 )
                 .csrf().disable() // Desactiva CSRF para pruebas (no recomendado para producción)

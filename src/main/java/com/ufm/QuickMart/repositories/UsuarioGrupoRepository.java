@@ -10,4 +10,6 @@ import java.util.List;
 public interface UsuarioGrupoRepository extends JpaRepository<UsuarioGrupo, Long> {
     UsuarioGrupo findByUsuarioIdAndGrupoId(Long usuarioId, Long grupoId);
     List<UsuarioGrupo> findByUsuarioId(Long usuarioId);
+    List<UsuarioGrupo> findByGrupoIdOrderByPuntajeDesc(Long grupoId);
+
 }

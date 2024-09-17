@@ -21,7 +21,7 @@ public class Partido {
     private Date fechaInicio;
 
     @ManyToOne
-    @JoinColumn(name = "equipo_lacl_id", nullable = false)
+    @JoinColumn(name = "equipo_local_id", nullable = false)  // Corregido el nombre de la columna
     private Equipo equipoLocal;
 
     @ManyToOne
