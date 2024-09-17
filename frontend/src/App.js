@@ -1,20 +1,16 @@
 import React from 'react';
-import Header from './Header';
 import Banner from './Banner';
-import UpcomingTournaments from './UpcomingTournaments';
-import FeaturedTeams from './FeaturedTeams';
-import LatestMatches from './LatestMatches';
-import Footer from './Footer';
+import Torneos from './Torneos';
+import Grupos from './Grupos'; // Assuming you'll have this component
 
 function App() {
     return (
         <div className="App">
-            <Header />
-            <Banner />
-            <UpcomingTournaments />
-            <FeaturedTeams />
-            <LatestMatches />
-            <Footer />
+            <Banner /> {/* Displaying Banner */}
+            <div className="container">
+                <Torneos /> {/* Left side: Torneos */}
+                <Grupos />   {/* Right side: Grupos */}
+            </div>
         </div>
     );
 }
