@@ -13,6 +13,10 @@ public class Equipo {
     @Column(nullable = false)
     private String nombre;
 
+    @ManyToOne
+    @JoinColumn(name = "torneo_id")  // Asegúrate de que esta columna existe en la tabla equipo
+    private Torneo torneo;
+
     // Getters y Setters
     public Long getId() {
         return id;
@@ -28,5 +32,13 @@ public class Equipo {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Torneo getTorneo() {
+        return torneo;
+    }
+
+    public void setTorneo(Torneo torneo) {
+        this.torneo = torneo;
     }
 }

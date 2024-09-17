@@ -79,15 +79,23 @@ INSERT INTO equipo (nombre) VALUES
                                 ('Equipo A'),
                                 ('Equipo B'),
                                 ('Equipo C'),
-                                ('Equipo D');
+                                ('Equipo D'),
+                                ('Equipo E'),
+                                ('Equipo F'),
+                                ('Equipo G'),
+                                ('Equipo H');
 
 -- Torneos
 INSERT INTO torneo (nombre) VALUES
-    ('Torneo 1');
+                                ('Torneo 1'),
+                                ('Torneo 2');
 
 -- Grupos
 INSERT INTO grupo (nombre, torneo_id) VALUES
-    ('Grupo 1', 1);
+                                          ('Grupo 1', 1),
+                                          ('Grupo 2', 1),
+                                          ('Grupo 1', 2),
+                                          ('Grupo 2', 2);
 
 -- Usuarios
 INSERT INTO usuario (nombre, apellido, nombre_usuario, correo, contrasena) VALUES
@@ -101,9 +109,21 @@ INSERT INTO usuario_grupo (usuario_id, grupo_id, puntaje) VALUES
                                                               (1, 1, 0),
                                                               (2, 1, 0),
                                                               (3, 1, 0),
-                                                              (4, 1, 0);
+                                                              (4, 1, 0),
+                                                              (1, 2, 0),
+                                                              (2, 2, 0),
+                                                              (3, 2, 0),
+                                                              (4, 2, 0),
+                                                              (1, 3, 0),
+                                                              (2, 3, 0),
+                                                              (3, 3, 0),
+                                                              (4, 3, 0),
+                                                              (1, 4, 0),
+                                                              (2, 4, 0),
+                                                              (3, 4, 0),
+                                                              (4, 4, 0);
 
--- Inserta partidos (suponiendo que todos los equipos juegan 2 partidos contra cada uno)
+-- Inserta partidos para el Torneo 1
 INSERT INTO partido (ronda, fecha_inicio, equipo_local_id, equipo_visitante_id, goles_local, goles_visitante) VALUES
                                                                                                                   ('Jornada 1', '2024-09-01', 1, 2, 1, 0),
                                                                                                                   ('Jornada 1', '2024-09-01', 3, 4, 2, 1),
@@ -112,7 +132,7 @@ INSERT INTO partido (ronda, fecha_inicio, equipo_local_id, equipo_visitante_id, 
                                                                                                                   ('Jornada 3', '2024-09-22', 1, 4, NULL, NULL),
                                                                                                                   ('Jornada 3', '2024-09-22', 2, 3, NULL, NULL);
 
--- Inserta predicciones de los usuarios (con grupo_id)
+-- Inserta predicciones para el Torneo 1
 INSERT INTO prediccion (usuario_id, partido_id, grupo_id, resultado_esperado) VALUES
                                                                                   (1, 1, 1, '1-0'),
                                                                                   (2, 1, 1, '2-1'),
@@ -134,3 +154,35 @@ INSERT INTO prediccion (usuario_id, partido_id, grupo_id, resultado_esperado) VA
                                                                                   (2, 5, 1, '2-2'),
                                                                                   (3, 5, 1, '1-0'),
                                                                                   (4, 5, 1, '1-1');
+
+-- Inserta partidos para el Torneo 2
+INSERT INTO partido (ronda, fecha_inicio, equipo_local_id, equipo_visitante_id, goles_local, goles_visitante) VALUES
+                                                                                                                  ('Jornada 1', '2024-10-01', 5, 6, 1, 1),
+                                                                                                                  ('Jornada 1', '2024-10-01', 7, 8, 2, 2),
+                                                                                                                  ('Jornada 2', '2024-10-15', 5, 7, NULL, NULL),
+                                                                                                                  ('Jornada 2', '2024-10-15', 6, 8, NULL, NULL),
+                                                                                                                  ('Jornada 3', '2024-10-22', 5, 8, NULL, NULL),
+                                                                                                                  ('Jornada 3', '2024-10-22', 6, 7, NULL, NULL);
+
+-- Inserta predicciones para el Torneo 2
+INSERT INTO prediccion (usuario_id, partido_id, grupo_id, resultado_esperado) VALUES
+                                                                                  (1, 7, 3, '1-1'),
+                                                                                  (2, 7, 3, '2-1'),
+                                                                                  (3, 7, 3, '1-2'),
+                                                                                  (4, 7, 3, '0-1'),
+                                                                                  (1, 8, 3, '2-1'),
+                                                                                  (2, 8, 3, '1-0'),
+                                                                                  (3, 8, 3, '3-2'),
+                                                                                  (4, 8, 3, '2-2'),
+                                                                                  (1, 9, 3, '2-2'),
+                                                                                  (2, 9, 3, '1-3'),
+                                                                                  (3, 9, 3, '0-1'),
+                                                                                  (4, 9, 3, '1-0'),
+                                                                                  (1, 10, 3, '1-0'),
+                                                                                  (2, 10, 3, '0-1'),
+                                                                                  (3, 10, 3, '2-2'),
+                                                                                  (4, 10, 3, '3-1'),
+                                                                                  (1, 11, 3, '0-2'),
+                                                                                  (2, 11, 3, '1-1'),
+                                                                                  (3, 11, 3, '2-1'),
+                                                                                  (4, 11, 3, '1-2');
