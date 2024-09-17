@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './Torneos.css'; // Ensure correct styling
+import './Torneos.css';
+import defaultImage from '../images/default-image.webp'; // Ensure the relative path is correct
 
 function Torneos() {
     const [torneos, setTorneos] = useState([]);
 
     useEffect(() => {
-        // Fetch torneos data from the backend
         axios.get('http://localhost:8080/api/torneos')
             .then(response => {
                 setTorneos(response.data);
@@ -19,10 +19,11 @@ function Torneos() {
     return (
         <section className="torneos">
             <h2>Torneos</h2>
-            <div>
+            <div className="torneos-list">
                 {torneos.map(torneo => (
                     <div key={torneo.id} className="torneo-item">
-                        <img src="/default-image.webp" alt="Torneo" /> {/* Default image */}
+                        {/* Using the imported default image */}
+                        <img src={defaultImage} alt="Torneo" className="torneo-image" />
                         <div className="torneo-name">{torneo.nombre}</div>
                     </div>
                 ))}
