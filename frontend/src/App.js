@@ -1,25 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import Header from './Header';
+import Banner from './Banner';
+import UpcomingTournaments from './UpcomingTournaments';
+import FeaturedTeams from './FeaturedTeams';
+import LatestMatches from './LatestMatches';
+import Footer from './Footer';
 
 function App() {
-    const [message, setMessage] = useState('Loading...');
-
-    useEffect(() => {
-        axios.get('http://localhost:8080/api/hola')
-            .then(response => {
-                setMessage(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error); // Log the full error
-                console.log('Error details:', error.response); // Log additional error details
-                setMessage('Error fetching data');
-            });
-    }, []);
-
     return (
         <div className="App">
-            <h1>Message from Backend:</h1>
-            <p>{message}</p>
+            <Header />
+            <Banner />
+            <UpcomingTournaments />
+            <FeaturedTeams />
+            <LatestMatches />
+            <Footer />
         </div>
     );
 }
