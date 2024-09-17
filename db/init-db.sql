@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS grupo (
                                      FOREIGN KEY (torneo_id) REFERENCES torneo(id) ON DELETE CASCADE
 );
 
--- Crea la tabla usuario_grupo
+-- Crea la tabla de unión usuario_grupo
 CREATE TABLE IF NOT EXISTS usuario_grupo (
                                              id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                              usuario_id BIGINT,
@@ -95,8 +95,8 @@ INSERT INTO equipo (nombre, torneo_id) VALUES
 INSERT INTO grupo (nombre, torneo_id) VALUES
                                           ('Grupo 1', 1),
                                           ('Grupo 2', 1),
-                                          ('Grupo 1', 2),
-                                          ('Grupo 2', 2);
+                                          ('Grupo 3', 2),
+                                          ('Grupo 4', 2);
 
 -- Usuarios
 INSERT INTO usuario (nombre, apellido, nombre_usuario, correo, contrasena) VALUES
@@ -131,11 +131,9 @@ INSERT INTO prediccion (usuario_id, partido_id, grupo_id, goles_local_esperado, 
                                                                                                               (2, 2, 1, 1, 0),
                                                                                                               (3, 2, 1, 3, 1),
                                                                                                               (4, 2, 1, 1, 2),
-                                                                                                              -- Usuario 1 no ha llenado esta predicción
                                                                                                               (2, 3, 1, 1, 2),
                                                                                                               (3, 3, 1, 0, 1),
                                                                                                               (4, 3, 1, 2, 1),
-                                                                                                              -- Usuario 1 no ha llenado esta predicción
                                                                                                               (2, 4, 1, 0, 2),
                                                                                                               (3, 4, 1, 1, 1),
                                                                                                               (4, 4, 1, 3, 0);
@@ -154,16 +152,15 @@ INSERT INTO prediccion (usuario_id, partido_id, grupo_id, goles_local_esperado, 
                                                                                                               (1, 7, 3, 2, 1),
                                                                                                               (2, 7, 3, 1, 2),
                                                                                                               (3, 7, 3, 0, 0),
-                                                                                                              (4, 7, 3, 1, 0),
-                                                                                                              (1, 8, 3, 2, 1),
-                                                                                                              (2, 8, 3, 0, 2),
-                                                                                                              (3, 8, 3, 1, 1),
-                                                                                                              (4, 8, 3, 2, 0),
-                                                                                                              -- Usuario 1 no ha llenado esta predicción
-                                                                                                              (2, 9, 3, 1, 0),
-                                                                                                              (3, 9, 3, 2, 1),
-                                                                                                              (4, 9, 3, 3, 2),
-                                                                                                              -- Usuario 1 no ha llenado esta predicción
-                                                                                                              (2, 10, 3, 0, 2),
-                                                                                                              (3, 10, 3, 1, 0),
-                                                                                                              (4, 10, 3, 2, 2);
+                                                                                                              (4, 7, 3, 3, 2),
+                                                                                                              (1, 8, 3, 1, 2),
+                                                                                                              (2, 8, 3, 2, 1),
+                                                                                                              (3, 8, 3, 2, 2),
+                                                                                                              (4, 8, 3, 1, 1),
+                                                                                                              (1, 9, 3, 2, 0),
+                                                                                                              (2, 9, 3, 1, 1),
+                                                                                                              (3, 9, 3, 0, 2),
+                                                                                                              (4, 9, 3, 2, 1),
+                                                                                                              (1, 10, 3, 1, 2),
+                                                                                                              (2, 10, 3, 2, 1),
+                                                                                                              (3, 10, 3, 1, 1);

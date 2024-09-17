@@ -1,5 +1,6 @@
 package com.ufm.QuickMart.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,10 +13,12 @@ public class UsuarioGrupo {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
+    @JsonBackReference
     private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "grupo_id", nullable = false)
+    @JsonBackReference
     private Grupo grupo;
 
     @Column(nullable = false)

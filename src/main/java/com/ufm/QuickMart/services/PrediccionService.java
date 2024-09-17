@@ -6,6 +6,8 @@ import com.ufm.QuickMart.repositories.PrediccionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PrediccionService {
 
@@ -26,5 +28,21 @@ public class PrediccionService {
 
         // Guarda la predicción en la base de datos
         return prediccionRepository.save(prediccion);
+    }
+
+    public List<Prediccion> getPredicciones(Long usuarioId, Long partidoId) {
+        return prediccionRepository.findByUsuarioIdAndPartidoId(usuarioId, partidoId);
+    }
+
+    public List<Prediccion> getPrediccionesPorUsuarioYGrupo(Long usuarioId, Long grupoId) {
+        return prediccionRepository.findByUsuarioIdAndGrupoId(usuarioId, grupoId);
+    }
+
+    public List<Prediccion> getPrediccionesPorPartidoYGrupo(Long partidoId, Long grupoId) {
+        return prediccionRepository.findByPartidoIdAndGrupoId(partidoId, grupoId);
+    }
+
+    public List<Prediccion> getPrediccionesPorUsuarioYGrupoYPartido(Long usuarioId, Long grupoId, Long partidoId) {
+        return prediccionRepository.findByUsuarioIdAndGrupoIdAndPartidoId(usuarioId, grupoId, partidoId);
     }
 }

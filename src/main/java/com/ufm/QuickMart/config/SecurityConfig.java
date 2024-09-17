@@ -31,6 +31,8 @@ public class SecurityConfig {
                                 .requestMatchers("/api/torneos").permitAll() // Permite acceso sin autenticación a /api/torneos
                                 .requestMatchers("/api/equipos/torneo/{torneoId}").permitAll()
                                 .requestMatchers("/api/predicciones").permitAll()
+                                .requestMatchers("/api/usuarios/{usuarioId}/grupos").permitAll()
+                                .requestMatchers("/api/usuarios/{usuarioId}/grupos/{grupoId}").permitAll()
                                 .anyRequest().authenticated() // Protege todos los demás endpoints
                 )
                 .csrf().disable() // Desactiva CSRF para pruebas (no recomendado para producción)

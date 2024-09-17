@@ -1,6 +1,9 @@
 package com.ufm.QuickMart.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "usuario")
@@ -15,6 +18,10 @@ public class Usuario {
     private String nombreUsuario;
     private String correo;
     private String contrasena;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private Set<UsuarioGrupo> usuarioGrupos = new HashSet<>();
 
     // Constructor por defecto
     public Usuario() {
@@ -76,5 +83,13 @@ public class Usuario {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+
+    public Set<UsuarioGrupo> getUsuarioGrupos() {
+        return usuarioGrupos;
+    }
+
+    public void setUsuarioGrupos(Set<UsuarioGrupo> usuarioGrupos) {
+        this.usuarioGrupos = usuarioGrupos;
     }
 }
