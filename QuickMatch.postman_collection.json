@@ -1,0 +1,469 @@
+{
+	"info": {
+		"_postman_id": "7e8e881e-9d3f-4999-a27a-438a1d0ecb63",
+		"name": "QuickMatch",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30151602"
+	},
+	"item": [
+		{
+			"name": "crear usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"luis\",\r\n    \"apellido\": \"martin\",\r\n    \"nombreUsuario\": \"pep\",\r\n    \"correo\": \"jucaz@example.com\",\r\n    \"contrasena\": \"miContraseña\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/usuarios/crear?nombre=paco&apellido=gento&nombreUsuario=lupe&correo=vidaz@example.com&contrasena=123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios",
+						"crear"
+					],
+					"query": [
+						{
+							"key": "nombre",
+							"value": "paco"
+						},
+						{
+							"key": "apellido",
+							"value": "gento"
+						},
+						{
+							"key": "nombreUsuario",
+							"value": "lupe"
+						},
+						{
+							"key": "correo",
+							"value": "vidaz@example.com"
+						},
+						{
+							"key": "contrasena",
+							"value": "123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "iniciar sesion",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/login?user=lupe&password=123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "lupe"
+						},
+						{
+							"key": "password",
+							"value": "123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "predicciones",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"partidoId\": 9,\r\n    \"grupoId\": 3,\r\n    \"golesLocalEsperado\": 0,\r\n    \"golesVisitanteEsperado\": 3\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/predicciones?usuarioId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"predicciones"
+					],
+					"query": [
+						{
+							"key": "usuarioId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "agregar usuario 4 a grupo 4",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/usuarios/4/grupos/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios",
+						"4",
+						"grupos",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "actualizar puntos",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/usuarios/partido/1/actualizar-puntos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios",
+						"partido",
+						"1",
+						"actualizar-puntos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "torneos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/torneos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"torneos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EquiposXtorneo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/equipos/torneo/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"equipos",
+						"torneo",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "predicciones(usuarioid,grupoid,ronda,partidoid)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/predicciones?usuarioId=1&grupoId=3&ronda=Jornada2&partidoId=9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"predicciones"
+					],
+					"query": [
+						{
+							"key": "usuarioId",
+							"value": "1"
+						},
+						{
+							"key": "grupoId",
+							"value": "3"
+						},
+						{
+							"key": "ronda",
+							"value": "Jornada2"
+						},
+						{
+							"key": "partidoId",
+							"value": "9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "predicciones(usuarioid, partidoid)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/predicciones?usuarioId=1&partidoId=9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"predicciones"
+					],
+					"query": [
+						{
+							"key": "usuarioId",
+							"value": "1"
+						},
+						{
+							"key": "partidoId",
+							"value": "9"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "predicciones(usuarioid,grupoid,ronda)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/predicciones?usuarioId=1&grupoId=3&ronda=Jornada2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"predicciones"
+					],
+					"query": [
+						{
+							"key": "usuarioId",
+							"value": "1"
+						},
+						{
+							"key": "grupoId",
+							"value": "3"
+						},
+						{
+							"key": "ronda",
+							"value": "Jornada2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "predicciones(partidoid,grupoid,ronda)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/predicciones?partidoId=9&grupoId=3&ronda=Jornada2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"predicciones"
+					],
+					"query": [
+						{
+							"key": "partidoId",
+							"value": "9"
+						},
+						{
+							"key": "grupoId",
+							"value": "3"
+						},
+						{
+							"key": "ronda",
+							"value": "Jornada2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "grupos de un usuario",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/usuarios/1/grupos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios",
+						"1",
+						"grupos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "tabla con orden descendente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/usuarios/grupo/1/clasificacion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios",
+						"grupo",
+						"1",
+						"clasificacion"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
