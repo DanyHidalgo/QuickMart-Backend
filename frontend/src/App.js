@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import Banner from './Banner';
 import Torneos from './Torneos';
-import Grupos from './Grupos'; // Assuming you'll have this component
+import './App.css';
 
 function App() {
+    const [torneos, setTorneos] = useState([]);
+
+    // Fetch torneos data from the backend API
+    useEffect(() => {
+        axios.get('http://localhost:8080/api/torneos')
+            .then(response => {
+                setTorneos(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching torneos:', error);
+            });
+    }, []);
+
     return (
         <div className="App">
-            <Banner /> {/* Displaying Banner */}
+            <Banner /> {/* Displaying the banner */}
             <div className="container">
-                <Torneos /> {/* Left side: Torneos */}
-                <Grupos />   {/* Right side: Grupos */}
+                <Torneos torneos={torneos} /> {/* Passing torneos data to Torneos component */}
             </div>
         </div>
     );
