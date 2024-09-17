@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS partido (
                                        FOREIGN KEY (equipo_visitante_id) REFERENCES equipo(id) ON DELETE CASCADE
 );
 
--- Crea la tabla prediccion (con goles esperados)
+-- Crea la tabla prediccion (con goles esperados y puntos ganados)
 CREATE TABLE IF NOT EXISTS prediccion (
                                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                           usuario_id BIGINT,
@@ -71,6 +71,7 @@ CREATE TABLE IF NOT EXISTS prediccion (
                                           grupo_id BIGINT, -- Relación con el grupo
                                           goles_local_esperado INT NULL, -- Goles esperados para el equipo local
                                           goles_visitante_esperado INT NULL, -- Goles esperados para el equipo visitante
+                                          puntos_ganados INT DEFAULT 0, -- Puntos ganados en la predicción
                                           FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE,
                                           FOREIGN KEY (partido_id) REFERENCES partido(id) ON DELETE CASCADE,
                                           FOREIGN KEY (grupo_id) REFERENCES grupo(id) ON DELETE CASCADE

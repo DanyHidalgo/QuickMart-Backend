@@ -1,12 +1,15 @@
 package com.ufm.QuickMart.controllers;
 
 import com.ufm.QuickMart.entities.Grupo;
+import com.ufm.QuickMart.entities.UsuarioGrupo;
 import com.ufm.QuickMart.services.UsuarioService;
 import com.ufm.QuickMart.services.GrupoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotNull;
@@ -67,4 +70,22 @@ public class UsuarioController {
             return ResponseEntity.status(500).body("Error interno del servidor: " + e.getMessage());
         }
     }
+
+    // Endpoint para obtener la clasificación por grupo
+    @GetMapping("/grupo/{grupoId}/clasificacion")
+    public List<UsuarioGrupo> obtenerClasificacionPorGrupo(@PathVariable("grupoId") Long grupoId) {
+        return usuarioService.obtenerClasificacionPorGrupo(grupoId);
+    }
+
+    @PutMapping("partido/{partidoId}/actualizar-puntos")
+    public ResponseEntity<String> actualizarPuntos(@PathVariable("partidoId") Long partidoId) {
+        System.out.println("Recibido partidoId: " + partidoId);  // Verifica si el partidoId se recibe correctamente
+        try {
+            usuarioService.actualizarPuntos(partidoId);
+            return ResponseEntity.ok("Puntos actualizados exitosamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al actualizar los puntos: " + e.getMessage());
+        }
+    }
+
 }

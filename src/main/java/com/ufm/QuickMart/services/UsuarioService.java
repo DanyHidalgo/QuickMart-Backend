@@ -1,11 +1,11 @@
 package com.ufm.QuickMart.services;
 
-import com.ufm.QuickMart.entities.Grupo;
-import com.ufm.QuickMart.entities.Usuario;
-import com.ufm.QuickMart.entities.UsuarioGrupo;
+import com.ufm.QuickMart.entities.*;
+import com.ufm.QuickMart.repositories.PrediccionRepository;
 import com.ufm.QuickMart.repositories.UsuarioRepository;
 import com.ufm.QuickMart.repositories.GrupoRepository;
 import com.ufm.QuickMart.repositories.UsuarioGrupoRepository;
+import com.ufm.QuickMart.repositories.PartidoRepository;  // Asegúrate de tener este repositorio
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,16 +19,21 @@ import java.util.Set;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PrediccionRepository prediccionRepository;
     private final GrupoRepository grupoRepository;
     private final UsuarioGrupoRepository usuarioGrupoRepository;
+    private final PartidoRepository partidoRepository;  // Repositorio para acceder a los partidos
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository, GrupoRepository grupoRepository,
-                          UsuarioGrupoRepository usuarioGrupoRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioService(UsuarioRepository usuarioRepository, PrediccionRepository prediccionRepository,
+                          GrupoRepository grupoRepository, UsuarioGrupoRepository usuarioGrupoRepository,
+                          PartidoRepository partidoRepository, PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.prediccionRepository = prediccionRepository;
         this.grupoRepository = grupoRepository;
         this.usuarioGrupoRepository = usuarioGrupoRepository;
+        this.partidoRepository = partidoRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -79,4 +84,70 @@ public class UsuarioService {
 
         return grupos;
     }
+
+    // Método para obtener la clasificación por grupo
+    public List<UsuarioGrupo> obtenerClasificacionPorGrupo(Long grupoId) {
+        return usuarioGrupoRepository.findByGrupoIdOrderByPuntajeDesc(grupoId);
+    }
+
+    // Calcula los puntos para una predicción y un partido
+    public int calcularPuntos(Prediccion prediccion, Partido partido) {
+        int puntos = 0;
+
+        if (partido.getGolesLocal() >= 0 && partido.getGolesVisitante() >= 0) {
+            // Verifica el ganador
+            if ((partido.getGolesLocal() > partido.getGolesVisitante() && prediccion.getGolesLocalEsperado() > prediccion.getGolesVisitanteEsperado())
+                    || (partido.getGolesLocal() < partido.getGolesVisitante() && prediccion.getGolesLocalEsperado() < prediccion.getGolesVisitanteEsperado())
+                    || (partido.getGolesLocal() == partido.getGolesVisitante() && prediccion.getGolesLocalEsperado() == prediccion.getGolesVisitanteEsperado())) {
+                puntos += 10;
+            }
+
+            // Verifica goles visitantes
+            if (partido.getGolesVisitante() == prediccion.getGolesVisitanteEsperado()) {
+                puntos += 8;
+            }
+
+            // Verifica goles locales
+            if (partido.getGolesLocal() == prediccion.getGolesLocalEsperado()) {
+                puntos += 8;
+            }
+
+            // Verifica predicción exacta
+            if (partido.getGolesLocal() == prediccion.getGolesLocalEsperado()
+                    && partido.getGolesVisitante() == prediccion.getGolesVisitanteEsperado()) {
+                puntos = 30;
+            }
+        }
+
+        return puntos;
+    }
+
+    // Actualiza los puntos de los usuarios basados en el resultado del partido
+    public void actualizarPuntos(Long partidoId) {
+        System.out.println("Buscando partido con ID: " + partidoId);
+        Partido partido = partidoRepository.findById(partidoId)
+                .orElseThrow(() -> new RuntimeException("Partido no encontrado"));
+        System.out.println("Partido encontrado: " + partido);
+
+        List<Prediccion> predicciones = prediccionRepository.findByPartidoId(partidoId);
+        System.out.println("Número de predicciones encontradas: " + predicciones.size());
+
+        for (Prediccion prediccion : predicciones) {
+            int puntos = calcularPuntos(prediccion, partido);
+            System.out.println("Predicción: " + prediccion + ", Puntos: " + puntos);
+
+            UsuarioGrupo usuarioGrupo = usuarioGrupoRepository.findByUsuarioIdAndGrupoId(prediccion.getUsuarioId(), prediccion.getGrupoId());
+
+            if (usuarioGrupo != null) {
+                usuarioGrupo.setPuntaje(usuarioGrupo.getPuntaje() + puntos);
+                usuarioGrupoRepository.save(usuarioGrupo);
+
+                prediccion.setPuntosGanados(puntos);
+                prediccionRepository.save(prediccion);
+            } else {
+                System.out.println("No se encontró UsuarioGrupo para Usuario ID: " + prediccion.getUsuarioId() + " y Grupo ID: " + prediccion.getGrupoId());
+            }
+        }
+    }
+
 }

@@ -17,6 +17,9 @@ public class Prediccion {
     private Integer golesLocalEsperado;
     private Integer golesVisitanteEsperado;
 
+    // Nuevo campo para almacenar los puntos ganados
+    private Integer puntosGanados;
+
     // Getters y Setters
     public Long getId() {
         return id;
@@ -64,5 +67,13 @@ public class Prediccion {
 
     public void setGolesVisitanteEsperado(Integer golesVisitanteEsperado) {
         this.golesVisitanteEsperado = golesVisitanteEsperado;
+    }
+
+    public Integer getPuntosGanados() {
+        return puntosGanados;
+    }
+
+    public void setPuntosGanados(Integer puntosGanados) {
+        this.puntosGanados = puntosGanados;
     }
 }
