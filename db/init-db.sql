@@ -17,16 +17,18 @@ CREATE TABLE IF NOT EXISTS usuario (
                                        contrasena VARCHAR(255) -- Contraseña cifrada (bcrypt)
 );
 
--- Crea la tabla equipo
-CREATE TABLE IF NOT EXISTS equipo (
-                                      id BIGINT AUTO_INCREMENT PRIMARY KEY,
-                                      nombre VARCHAR(50)
-);
-
 -- Crea la tabla torneo
 CREATE TABLE IF NOT EXISTS torneo (
                                       id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                       nombre VARCHAR(100)
+);
+
+-- Crea la tabla equipo (ahora con torneo_id)
+CREATE TABLE IF NOT EXISTS equipo (
+                                      id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                                      nombre VARCHAR(50),
+                                      torneo_id BIGINT, -- Relación con torneo
+                                      FOREIGN KEY (torneo_id) REFERENCES torneo(id) ON DELETE CASCADE
 );
 
 -- Crea la tabla grupo
@@ -61,34 +63,33 @@ CREATE TABLE IF NOT EXISTS partido (
                                        FOREIGN KEY (equipo_visitante_id) REFERENCES equipo(id) ON DELETE CASCADE
 );
 
--- Crea la tabla prediccion (con grupo_id)
+-- Crea la tabla prediccion (con goles esperados)
 CREATE TABLE IF NOT EXISTS prediccion (
                                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                           usuario_id BIGINT,
                                           partido_id BIGINT,
                                           grupo_id BIGINT, -- Relación con el grupo
-                                          resultado_esperado VARCHAR(50),
+                                          goles_local_esperado INT NULL, -- Goles esperados para el equipo local
+                                          goles_visitante_esperado INT NULL, -- Goles esperados para el equipo visitante
                                           FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE,
                                           FOREIGN KEY (partido_id) REFERENCES partido(id) ON DELETE CASCADE,
                                           FOREIGN KEY (grupo_id) REFERENCES grupo(id) ON DELETE CASCADE
 );
 
 -- Inserta datos en las tablas
--- Equipos
-INSERT INTO equipo (nombre) VALUES
-                                ('Equipo A'),
-                                ('Equipo B'),
-                                ('Equipo C'),
-                                ('Equipo D'),
-                                ('Equipo E'),
-                                ('Equipo F'),
-                                ('Equipo G'),
-                                ('Equipo H');
-
 -- Torneos
-INSERT INTO torneo (nombre) VALUES
-                                ('Torneo 1'),
-                                ('Torneo 2');
+INSERT INTO torneo (nombre) VALUES ('Torneo 1'), ('Torneo 2');
+
+-- Equipos (con torneo_id asociado)
+INSERT INTO equipo (nombre, torneo_id) VALUES
+                                           ('Equipo A', 1),
+                                           ('Equipo B', 1),
+                                           ('Equipo C', 1),
+                                           ('Equipo D', 1),
+                                           ('Equipo E', 2),
+                                           ('Equipo F', 2),
+                                           ('Equipo G', 2),
+                                           ('Equipo H', 2);
 
 -- Grupos
 INSERT INTO grupo (nombre, torneo_id) VALUES
@@ -99,29 +100,17 @@ INSERT INTO grupo (nombre, torneo_id) VALUES
 
 -- Usuarios
 INSERT INTO usuario (nombre, apellido, nombre_usuario, correo, contrasena) VALUES
-                                                                               ('Juan', 'Pérez', 'juanperez', 'juan@example.com', '$2a$10$N0aHsS3KfZZ.V9YrxJz0pui6Vz8jfg4FoXZZzwrPf/zk13RzIWbKC'), -- password123
+                                                                               ('Juan', 'Pérez', 'juanperez', 'juan@example.com', '$2a$10$N0aHsS3KfZZ.V9YrxJz0pui6Vz8jfg4FoXZZzwrPf/zk13RzIWbKC'),
                                                                                ('Ana', 'Gómez', 'anagomez', 'ana@example.com', '$2a$10$N0aHsS3KfZZ.V9YrxJz0pui6Vz8jfg4FoXZZzwrPf/zk13RzIWbKC'),
                                                                                ('Luis', 'Martínez', 'luismartinez', 'luis@example.com', '$2a$10$N0aHsS3KfZZ.V9YrxJz0pui6Vz8jfg4FoXZZzwrPf/zk13RzIWbKC'),
                                                                                ('Marta', 'Rodríguez', 'martarodriguez', 'marta@example.com', '$2a$10$N0aHsS3KfZZ.V9YrxJz0pui6Vz8jfg4FoXZZzwrPf/zk13RzIWbKC');
 
 -- Asocia usuarios con grupos
 INSERT INTO usuario_grupo (usuario_id, grupo_id, puntaje) VALUES
-                                                              (1, 1, 0),
-                                                              (2, 1, 0),
-                                                              (3, 1, 0),
-                                                              (4, 1, 0),
-                                                              (1, 2, 0),
-                                                              (2, 2, 0),
-                                                              (3, 2, 0),
-                                                              (4, 2, 0),
-                                                              (1, 3, 0),
-                                                              (2, 3, 0),
-                                                              (3, 3, 0),
-                                                              (4, 3, 0),
-                                                              (1, 4, 0),
-                                                              (2, 4, 0),
-                                                              (3, 4, 0),
-                                                              (4, 4, 0);
+                                                              (1, 1, 0), (2, 1, 0), (3, 1, 0), (4, 1, 0),
+                                                              (1, 2, 0), (2, 2, 0), (3, 2, 0), (4, 2, 0),
+                                                              (1, 3, 0), (2, 3, 0), (3, 3, 0), (4, 3, 0),
+                                                              (1, 4, 0), (2, 4, 0), (3, 4, 0), (4, 4, 0);
 
 -- Inserta partidos para el Torneo 1
 INSERT INTO partido (ronda, fecha_inicio, equipo_local_id, equipo_visitante_id, goles_local, goles_visitante) VALUES
@@ -133,27 +122,23 @@ INSERT INTO partido (ronda, fecha_inicio, equipo_local_id, equipo_visitante_id, 
                                                                                                                   ('Jornada 3', '2024-09-22', 2, 3, NULL, NULL);
 
 -- Inserta predicciones para el Torneo 1
-INSERT INTO prediccion (usuario_id, partido_id, grupo_id, resultado_esperado) VALUES
-                                                                                  (1, 1, 1, '1-0'),
-                                                                                  (2, 1, 1, '2-1'),
-                                                                                  (3, 1, 1, '1-1'),
-                                                                                  (4, 1, 1, '0-1'),
-                                                                                  (1, 2, 1, '2-1'),
-                                                                                  (2, 2, 1, '1-0'),
-                                                                                  (3, 2, 1, '3-1'),
-                                                                                  (4, 2, 1, '1-2'),
-                                                                                  (1, 3, 1, '2-2'),
-                                                                                  (2, 3, 1, '1-2'),
-                                                                                  (3, 3, 1, '0-1'),
-                                                                                  (4, 3, 1, '2-1'),
-                                                                                  (1, 4, 1, '1-0'),
-                                                                                  (2, 4, 1, '0-2'),
-                                                                                  (3, 4, 1, '1-1'),
-                                                                                  (4, 4, 1, '3-0'),
-                                                                                  (1, 5, 1, '0-1'),
-                                                                                  (2, 5, 1, '2-2'),
-                                                                                  (3, 5, 1, '1-0'),
-                                                                                  (4, 5, 1, '1-1');
+INSERT INTO prediccion (usuario_id, partido_id, grupo_id, goles_local_esperado, goles_visitante_esperado) VALUES
+                                                                                                              (1, 1, 1, 1, 0),
+                                                                                                              (2, 1, 1, 2, 1),
+                                                                                                              (3, 1, 1, 1, 1),
+                                                                                                              (4, 1, 1, 0, 1),
+                                                                                                              (1, 2, 1, 2, 1),
+                                                                                                              (2, 2, 1, 1, 0),
+                                                                                                              (3, 2, 1, 3, 1),
+                                                                                                              (4, 2, 1, 1, 2),
+                                                                                                              -- Usuario 1 no ha llenado esta predicción
+                                                                                                              (2, 3, 1, 1, 2),
+                                                                                                              (3, 3, 1, 0, 1),
+                                                                                                              (4, 3, 1, 2, 1),
+                                                                                                              -- Usuario 1 no ha llenado esta predicción
+                                                                                                              (2, 4, 1, 0, 2),
+                                                                                                              (3, 4, 1, 1, 1),
+                                                                                                              (4, 4, 1, 3, 0);
 
 -- Inserta partidos para el Torneo 2
 INSERT INTO partido (ronda, fecha_inicio, equipo_local_id, equipo_visitante_id, goles_local, goles_visitante) VALUES
@@ -165,24 +150,20 @@ INSERT INTO partido (ronda, fecha_inicio, equipo_local_id, equipo_visitante_id, 
                                                                                                                   ('Jornada 3', '2024-10-22', 6, 7, NULL, NULL);
 
 -- Inserta predicciones para el Torneo 2
-INSERT INTO prediccion (usuario_id, partido_id, grupo_id, resultado_esperado) VALUES
-                                                                                  (1, 7, 3, '1-1'),
-                                                                                  (2, 7, 3, '2-1'),
-                                                                                  (3, 7, 3, '1-2'),
-                                                                                  (4, 7, 3, '0-1'),
-                                                                                  (1, 8, 3, '2-1'),
-                                                                                  (2, 8, 3, '1-0'),
-                                                                                  (3, 8, 3, '3-2'),
-                                                                                  (4, 8, 3, '2-2'),
-                                                                                  (1, 9, 3, '2-2'),
-                                                                                  (2, 9, 3, '1-3'),
-                                                                                  (3, 9, 3, '0-1'),
-                                                                                  (4, 9, 3, '1-0'),
-                                                                                  (1, 10, 3, '1-0'),
-                                                                                  (2, 10, 3, '0-1'),
-                                                                                  (3, 10, 3, '2-2'),
-                                                                                  (4, 10, 3, '3-1'),
-                                                                                  (1, 11, 3, '0-2'),
-                                                                                  (2, 11, 3, '1-1'),
-                                                                                  (3, 11, 3, '2-1'),
-                                                                                  (4, 11, 3, '1-2');
+INSERT INTO prediccion (usuario_id, partido_id, grupo_id, goles_local_esperado, goles_visitante_esperado) VALUES
+                                                                                                              (1, 7, 3, 2, 1),
+                                                                                                              (2, 7, 3, 1, 2),
+                                                                                                              (3, 7, 3, 0, 0),
+                                                                                                              (4, 7, 3, 1, 0),
+                                                                                                              (1, 8, 3, 2, 1),
+                                                                                                              (2, 8, 3, 0, 2),
+                                                                                                              (3, 8, 3, 1, 1),
+                                                                                                              (4, 8, 3, 2, 0),
+                                                                                                              -- Usuario 1 no ha llenado esta predicción
+                                                                                                              (2, 9, 3, 1, 0),
+                                                                                                              (3, 9, 3, 2, 1),
+                                                                                                              (4, 9, 3, 3, 2),
+                                                                                                              -- Usuario 1 no ha llenado esta predicción
+                                                                                                              (2, 10, 3, 0, 2),
+                                                                                                              (3, 10, 3, 1, 0),
+                                                                                                              (4, 10, 3, 2, 2);

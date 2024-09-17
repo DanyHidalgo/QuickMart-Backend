@@ -13,7 +13,9 @@ public class Prediccion {
     private Long usuarioId;
     private Long partidoId;
     private Long grupoId;
-    private String resultadoEsperado;
+
+    private Integer golesLocalEsperado;
+    private Integer golesVisitanteEsperado;
 
     // Getters y Setters
     public Long getId() {
@@ -48,11 +50,19 @@ public class Prediccion {
         this.grupoId = grupoId;
     }
 
-    public String getResultadoEsperado() {
-        return resultadoEsperado;
+    public Integer getGolesLocalEsperado() {
+        return golesLocalEsperado;
     }
 
-    public void setResultadoEsperado(String resultadoEsperado) {
-        this.resultadoEsperado = resultadoEsperado;
+    public void setGolesLocalEsperado(Integer golesLocalEsperado) {
+        this.golesLocalEsperado = golesLocalEsperado;
+    }
+
+    public Integer getGolesVisitanteEsperado() {
+        return golesVisitanteEsperado;
+    }
+
+    public void setGolesVisitanteEsperado(Integer golesVisitanteEsperado) {
+        this.golesVisitanteEsperado = golesVisitanteEsperado;
     }
 }

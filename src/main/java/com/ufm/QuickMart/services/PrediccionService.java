@@ -17,7 +17,12 @@ public class PrediccionService {
         prediccion.setUsuarioId(usuarioId);
         prediccion.setPartidoId(prediccionDTO.getPartidoId());
         prediccion.setGrupoId(prediccionDTO.getGrupoId());
-        prediccion.setResultadoEsperado(prediccionDTO.getResultadoEsperado());
+        int golesLocal = prediccionDTO.getGolesLocalEsperado();
+        int golesVisitante = prediccionDTO.getGolesVisitanteEsperado();
+
+        // Establece los valores de goles esperados
+        prediccion.setGolesLocalEsperado(golesLocal);
+        prediccion.setGolesVisitanteEsperado(golesVisitante);
 
         // Guarda la predicción en la base de datos
         return prediccionRepository.save(prediccion);
