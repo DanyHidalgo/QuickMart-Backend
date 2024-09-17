@@ -1,58 +1,25 @@
-.container {
+.torneos-list {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    align-items: flex-start; /* Align containers to the top */
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto; /* Center the container */
-    gap: 40px; /* Add more space between containers */
-}
-
-.torneos, .grupos {
-    flex: 1;
-    margin: 20px; /* Increase margin around the containers */
-    padding: 30px;
-    background-color: #ADD8E6;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-height: 600px; /* Make the containers much taller */
-}
-
-.torneos h2, .grupos h2 {
-    text-align: center;
-    font-size: 36px;
-    margin-bottom: 20px;
-}
-
-.torneos {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 .torneo-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 30px; /* Space between torneo items */
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    text-align: center;
+    border-radius: 8px;
 }
 
-.torneo-item img {
-    width: 250px; /* Increase the size of the images */
+.torneo-image {
+    width: 100px; /* Adjust the size */
     height: auto;
-    margin-bottom: 15px;
-    border-radius: 8px; /* Optional: Rounded corners for images */
+    margin-bottom: 10px;
 }
 
 .torneo-name {
-    font-size: 26px; /* Increase the font size for torneo names */
+    font-size: 18px;
     font-weight: bold;
-}
-
-.grupos {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
