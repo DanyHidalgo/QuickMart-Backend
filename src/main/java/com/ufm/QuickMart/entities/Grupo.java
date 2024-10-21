@@ -19,6 +19,13 @@ public class Grupo {
     @JsonBackReference
     private Set<UsuarioGrupo> usuarioGrupos = new HashSet<>();
 
+    @Column(name = "torneo_id", nullable = false)
+    private Long torneoId;
+
+    // Agregar este campo
+    @Column(name = "usuario_id")
+    private Long usuarioId;
+
     // Constructor por defecto
     public Grupo() {
     }
@@ -51,5 +58,21 @@ public class Grupo {
 
     public void setUsuarioGrupos(Set<UsuarioGrupo> usuarioGrupos) {
         this.usuarioGrupos = usuarioGrupos;
+    }
+
+    public Long getTorneoId() {
+        return torneoId;
+    }
+
+    public void setTorneoId(Long torneoId) {
+        this.torneoId = torneoId;
+    }
+
+    public Long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 }

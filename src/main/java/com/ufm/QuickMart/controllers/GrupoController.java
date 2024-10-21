@@ -1,9 +1,11 @@
 package com.ufm.QuickMart.controllers;
 
+import com.ufm.QuickMart.entities.Grupo;
 import com.ufm.QuickMart.entities.UsuarioGrupo;
 import com.ufm.QuickMart.services.GrupoService;
 import com.ufm.QuickMart.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,4 +42,22 @@ public class GrupoController {
         List<UsuarioGrupo> clasificacion = usuarioService.obtenerClasificacionPorGrupo(grupoId);
         return ResponseEntity.ok(clasificacion);
     }
+
+    @PostMapping("/grupos/{usuarioId}/{torneoId}")
+    public ResponseEntity<Grupo> createGrupo(
+            @PathVariable Long usuarioId,
+            @PathVariable Long torneoId,
+            @RequestParam String nombre) {
+        // Crear el grupo utilizando los parámetros
+        Grupo nuevoGrupo = grupoService.createGrupo(nombre, torneoId, usuarioId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoGrupo);
+    }
+
+    @DeleteMapping("/grupos/{id}")
+    public ResponseEntity<String> deleteGrupo(@PathVariable Long id) {
+        grupoService.deleteGrupo(id);
+        return ResponseEntity.ok("Grupo eliminado exitosamente");
+    }
+
+
 }

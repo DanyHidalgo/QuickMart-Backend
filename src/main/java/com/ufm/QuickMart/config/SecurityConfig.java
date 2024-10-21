@@ -41,6 +41,10 @@ public class SecurityConfig {
                                 .requestMatchers("/api/usuario-grupo/{usuarioId}/{grupoId}").permitAll() //ver puntos de usuario en un grupo
                                 .requestMatchers("/api/partidos/{id}").permitAll() //actualizar resultado de partido
                                 .requestMatchers("/api/usuarios/partido/{partidoId}/actualizar-puntos").permitAll() //puede ser post o put actualiza partido por id
+                                .requestMatchers("/api/partidos/torneo/{torneoId}/ronda/{ronda}").permitAll() //ver partidos por id del torneo y ronda
+                                .requestMatchers("/api/grupos/{usuarioId}/{torneoId}").permitAll() //crear grupo
+                                .requestMatchers("/api/grupos/{id}").permitAll() //eliminar grupo por id
+
 
 
                                 .anyRequest().authenticated() // Protege todos los demás endpoints
