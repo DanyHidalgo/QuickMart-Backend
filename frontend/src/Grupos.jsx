@@ -2,9 +2,9 @@ import React from 'react';
 
 function Grupos() {
     return (
-        <section>
+        <section className="grupos">
             <h2>Grupos</h2>
-            {/* Group list will go here */}
+            <p>Fetching groups data... (This is a test message)</p>
         </section>
     );
 }

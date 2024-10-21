@@ -1,50 +1,43 @@
-.container {
+/* Style for the top Banner */
+.Banner {
+  width: 100%;
+  height: 200px; /* Adjust as needed */
+  background-color: #c1e1ec; /* Color for the banner */
+  text-align: center;
+  padding: 20px;
+}
+
+/* Style for the bottom layout with three equal columns */
+/* Parent container for the bottom section */
+.bottom-layout {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Center vertically within the container */
+  align-items: stretch; /* Ensures all child containers stretch to the same height */
+  width: 100%;
   padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto; /* Center the container */
+  height: auto; /* Let the content define the height, remove fixed height */
 }
 
-.torneos, .grupos {
-  flex: 1; /* Make both containers take equal space */
-  margin: 15px; /* Add some spacing between the two sections */
-  padding: 30px;
-  background-color: #c1e1ec; /* Background color for both sections */
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
-  min-height: 400px; /* Make the containers taller than the banner */
+/* Child containers: Torneos, Grupos, and the empty container */
+.torneos, .grupos, .featuredteams {
+  width: 700px; /* Static width for all containers */
+  height: 500px;
+  margin: 0.25px;
+  padding: 10px;
+  background-color: #c1e1ec;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.torneos h2, .grupos h2 {
+/* Title styling for the text inside the containers */
+.torneos h2, .grupos h2, .featuredteams h2 {
   text-align: center;
-  font-size: 36px; /* Increase the font size of the titles */
-  margin-bottom: 20px;
+  font-size: 36px; /* Larger font size for the title */
+  margin: 0;
+  padding: 10px 0;
 }
 
-.torneos {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center the content horizontally */
-  justify-content: center; /* Center the content vertically */
-}
-
-.torneo-item img {
-  width: 200px; /* Increase the size of the images */
-  height: auto;
-  margin-bottom: 15px;
-}
-
-.torneo-name {
-  font-size: 24px; /* Increase the font size for torneo names */
-  font-weight: bold;
-}
-
-.grupos {
-  /* Specific styles for the Grupos container can be added here */
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Center content horizontally */
-  justify-content: center; /* Center content vertically */
-}
