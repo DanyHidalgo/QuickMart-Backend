@@ -42,8 +42,12 @@ services:
             - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
             - SPRING_DATASOURCE_DRIVER_CLASS_NAME=${SPRING_DATASOURCE_DRIVER_CLASS_NAME}
             - SPRING_JPA_HIBERNATE_DDL_AUTO=${SPRING_JPA_HIBERNATE_DDL_AUTO}
+            - SPRING_REDIS_HOST=redis  # <- Nueva configuración para Redis
+            - SPRING_REDIS_PORT=6379   # <- Nueva configuración para Redis
         depends_on:
             db:
+                condition: service_healthy
+            redis:                      # <- Agrega Redis como dependencia
                 condition: service_healthy
         networks:
             - quickmart-network
@@ -53,6 +57,26 @@ services:
                 limits:
                     cpus: "0.5"
                     memory: 512M
+
+    redis:
+        image: redis:7-alpine
+        container_name: quickmart-redis
+        ports:
+            - "6379:6379"
+        networks:
+            - quickmart-network
+        deploy:
+            resources:
+                limits:
+                    cpus: "0.25"
+                    memory: 256M
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            interval: 10s
+            retries: 3
+            start_period: 5s
+            timeout: 5s
+
 
     frontend:
         build:

@@ -45,6 +45,19 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- Spring Boot Redis Dependency -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.33</version>
+		</dependency>
+
+
 		<!-- Spring Boot Actuator Dependency -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -64,13 +77,6 @@
 			<artifactId>junit-jupiter</artifactId>
 			<version>5.11.0</version>
 			<scope>test</scope>
-		</dependency>
-
-		<!-- MySQL Connector Dependency -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.33</version>
 		</dependency>
 
 		<!-- Jackson Databind for JSON processing -->

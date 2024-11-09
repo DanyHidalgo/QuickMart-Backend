@@ -7,6 +7,7 @@ import com.ufm.QuickMart.repositories.GrupoRepository;
 import com.ufm.QuickMart.repositories.UsuarioGrupoRepository;
 import com.ufm.QuickMart.repositories.PartidoRepository;  // Asegúrate de tener este repositorio
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -68,6 +69,7 @@ public class UsuarioService {
     }
 
     // Método actualizado para obtener los grupos del usuario
+    @Cacheable(value = "gruposUsuario", key = "#usuarioId")
     public Set<Grupo> obtenerGruposDelUsuario(Long usuarioId) {
         // Verificar que el usuario exista
         Usuario usuario = usuarioRepository.findById(usuarioId)

@@ -2,6 +2,8 @@ package com.ufm.QuickMart.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -31,7 +33,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/torneos").permitAll() // Permite acceso sin autenticación a /api/torneos
 
                                 .requestMatchers("/api/equipos/torneo/{torneoId}").permitAll() //ver torneo por id
-                                .requestMatchers("/api/predicciones").permitAll() // todas las predicciones
+                                .requestMatchers("/api/predicciones/**").permitAll() // todas las predicciones
                                 .requestMatchers("/api/usuarios/{usuarioId}/grupos").permitAll() // ver grupos por id de usuario
                                 .requestMatchers("/api/usuarios/grupo/{grupoId}/clasificacion").permitAll() //ver la calsificacion de grupo
                                 .requestMatchers("/api/hola").permitAll()
@@ -44,6 +46,9 @@ public class SecurityConfig {
                                 .requestMatchers("/api/partidos/torneo/{torneoId}/ronda/{ronda}").permitAll() //ver partidos por id del torneo y ronda
                                 .requestMatchers("/api/grupos/{usuarioId}/{torneoId}").permitAll() //crear grupo
                                 .requestMatchers("/api/grupos/{id}").permitAll() //eliminar grupo por id
+
+                                .requestMatchers("/api/redis/**").permitAll() //
+                                .requestMatchers("/api/**").permitAll()
 
 
 
@@ -70,6 +75,12 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public RedisConnectionFactory redisConnectionFactory() {
+        // Configura la conexión a Redis, asegúrate de que los detalles del host y puerto sean correctos
+        return new LettuceConnectionFactory("redis", 6379);
     }
 
     @Bean

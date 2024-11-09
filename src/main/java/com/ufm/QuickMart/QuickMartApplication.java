@@ -5,10 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
+@EnableCaching
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")  // Habilita CORS para el frontend en localhost:3000
 public class QuickMartApplication {
 
 	public static void main(String[] args) {
