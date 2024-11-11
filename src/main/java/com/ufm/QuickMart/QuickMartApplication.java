@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
-@EnableCaching
+//@EnableCaching
 @RestController
 public class QuickMartApplication {
 
@@ -19,4 +19,5 @@ public class QuickMartApplication {
 	public String helloWorld() {
 		return "WELCOME!";
 	}
+
 }
