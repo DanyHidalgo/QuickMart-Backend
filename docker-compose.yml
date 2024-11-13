@@ -92,9 +92,30 @@ services:
                     cpus: "0.5"
                     memory: 512M
 
+
+
+    mongodb:
+        image: mongo
+        container_name: mongodb
+        ports:
+            - "27017:27017"
+        volumes:
+            - ./data/db:/data/db
+        networks:
+            - quickmart-network
+        deploy:
+            resources:
+                limits:
+                    cpus: "0.5"
+                    memory: 512M
+
+
+
 volumes:
     db_data:
+    mongodb_data:
 
 networks:
     quickmart-network:
         driver: bridge
+
